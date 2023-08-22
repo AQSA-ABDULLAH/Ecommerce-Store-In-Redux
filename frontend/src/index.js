@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-
-import { configureStore } from '@reduxjs/toolkit'
+import productsReducer from './Features/productSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    products: productsReducer,
+  },
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
