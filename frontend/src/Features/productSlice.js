@@ -16,6 +16,7 @@ export const productsFetch = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error; // Rethrow the error to let createAsyncThunk handle it
     }
   }
 );
@@ -24,17 +25,18 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {},
-  extraReducers: {
-    [productsFetch.pending]: (state, action) => {
-      state.status = "pending";
-    },
-    [productsFetch.fulfilled]: (state, action) => {
-      state.items = action.payload;
-      state.status = "success";
-    },
-    [productsFetch.rejected]: (state, action) => {
-      state.status = "rejected";
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(productsFetch.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(productsFetch.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.status = "success";
+      })
+      .addCase(productsFetch.rejected, (state, action) => {
+        state.status = "rejected";
+      });
   },
 });
 

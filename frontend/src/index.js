@@ -7,11 +7,15 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import productsReducer from './Features/productSlice';
+import { productsApi } from './Features/productsApi';
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
+    [productsApi.reducerPath]: productsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productsApi.middleware),
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
